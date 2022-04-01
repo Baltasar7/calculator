@@ -2,7 +2,7 @@
 SILENCE = @
 
 #---- Outputs ----#
-COMPONENT_NAME = calc_repo
+COMPONENT_NAME = calculator
 #Set this to @ to keep the makefile quiet
 SILENCE = @
 
