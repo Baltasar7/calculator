@@ -1,41 +1,31 @@
-#Set this to @ to keep the makefile quiet
-SILENCE = @
+TARGET=calculator
 
-#---- Outputs ----#
-COMPONENT_NAME = calculator
-#Set this to @ to keep the makefile quiet
-SILENCE = @
+CC=gcc
+CFLAGS=-g -fprofile-arcs -ftest-coverage -Wall -Werror
+LDFLAGS=-fprofile-arcs -ftest-coverage
 
-#--- Inputs ----#
-PROJECT_HOME_DIR = .
-ifeq "$(CPPUTEST_HOME)" ""
-    CPPUTEST_HOME = ../CppUTest
-endif
-CPP_PLATFORM = Gcc
+LIBS=#-lpthread -lm
 
-SRC_DIRS = \
-    src\
-    src/*
+INCLUDE=-I./include
+SRCDIR=./src
 
-# to pick specific files (rather than directories) use this:    
-SRC_FILES = 
+#OBJDIR=./obj
+OBJS= \
+	main.o \
+	operation.o \
 
-TEST_SRC_DIRS = \
-    tests \
-    tests/*
+$(TARGET): $(OBJS)
+	$(CC) -o $@ $^ $(LDFLAGS)
 
-MOCKS_SRC_DIRS = \
-    mocks \
+#$(OBJDIR)/%.o: $(SRCDIR)/%.c
+#	mkdir -p $(OBJDIR)
+#	@[ -d $(OBJDIR) ]
+#	$(CC) $(CFLAGS) $(INCLUDE) -c -o $@ $<
 
-INCLUDE_DIRS =\
-  .\
-  include \
-  $(CPPUTEST_HOME)/include/ \
-  $(CPPUTEST_HOME)/include/Platforms/Gcc\
-  mocks
+%.o: $(SRCDIR)/%.c
+	$(CC) $(CFLAGS) $(INCLUDE) -c -o $@ $<
 
-CPPUTEST_WARNINGFLAGS = -Wall -Werror -Wswitch-default 
-CPPUTEST_WARNINGFLAGS += -Wconversion -Wswitch-enum 
+all: clean $(TARGET)
 
-include $(CPPUTEST_HOME)/build/MakefileWorker.mk
-
+clean:
+	rm -rf $(TARGET) *.o *.gcno *.gcda *.gcov
