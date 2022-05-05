@@ -1,31 +1,37 @@
-TARGET=calculator
+##
+## Attention:
+##      This makefile is not support header file update. (TODO)
+##      When updated header file, Must execute make clean.
+##
 
-CC=gcc
-CFLAGS=-g -fprofile-arcs -ftest-coverage -Wall -Werror
-LDFLAGS=-fprofile-arcs -ftest-coverage
+TARGET:=calculator
 
-LIBS=#-lpthread -lm
+CC:=gcc
+CFLAGS:=-g -fprofile-arcs -ftest-coverage -Wall -Werror
+LDFLAGS:=-fprofile-arcs -ftest-coverage
 
-INCLUDE=-I./include
-SRCDIR=./src
+INCLUDE:=-I./include
+SRCDIR:=./src
+SRCS:=$(wildcard $(SRCDIR)/*.c)
 
-#OBJDIR=./obj
-OBJS= \
-	main.o \
-	operation.o \
+OBJDIR:=./obj
+OBJS:=$(patsubst $(SRCDIR)/%.c,$(OBJDIR)/%.o,$(SRCS))
+
+vpath %.c src
+vpath %.h include
+
+
+.PHONY: all
+all: $(TARGET)
 
 $(TARGET): $(OBJS)
 	$(CC) -o $@ $^ $(LDFLAGS)
 
-#$(OBJDIR)/%.o: $(SRCDIR)/%.c
-#	mkdir -p $(OBJDIR)
-#	@[ -d $(OBJDIR) ]
-#	$(CC) $(CFLAGS) $(INCLUDE) -c -o $@ $<
+$(OBJDIR)/%.o: %.c
+	@mkdir -p $(OBJDIR)
+	$(CC) $(CFLAGS) $(INCLUDE) -o $@ -c $<
 
-%.o: $(SRCDIR)/%.c
-	$(CC) $(CFLAGS) $(INCLUDE) -c -o $@ $<
 
-all: clean $(TARGET)
-
+.PHONY: clean
 clean:
-	rm -rf $(TARGET) *.o *.gcno *.gcda *.gcov
+	rm -rf $(TARGET) $(OBJDIR)
