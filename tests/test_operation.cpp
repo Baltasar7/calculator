@@ -10,6 +10,6 @@ TEST_GROUP(operation) {
 };
 
 TEST(operation, OneColumnAddOperation) {
-    int retval = add(1, 2);
+    int retval = operate_add(1, 2);
     CHECK_EQUAL(retval, 3);
 }
