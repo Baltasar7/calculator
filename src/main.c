@@ -10,18 +10,18 @@ typedef {
     OPERATOR_TYPE_NONE,
     OPERATOR_TYPE_INT,
     OPERATOR_TYPE_BIT,
-} OPERATOR_TYPE;
+} OperatorType_e;
 
 typedef {
     const ;
     int32_t (*func)(int32_t, int32_t);
-    OPERATOR_TYPE type;
-} OPERATOR_ATTR; 
+    OperatorType_e type;
+} OperatorAttr_t;
 
 
 int parse_operator();
 int parse_operand(
-    char* argv[], const OPERATOR_TYPE operator_type,
+    char* argv[], const OperatorType_e operator_type,
     int32_t* left_operand, int32_t* right_operand);
 
 /*
@@ -54,7 +54,7 @@ int main(int argc, char* argv[]) {
     /*
      *  Operator check.
      */
-    OPERATOR_ATTR operator = {
+    OperatorAttr_t operator = {
         ,
         NULL,
         OPERATOR_TYPE_NONE
@@ -114,7 +114,7 @@ int parse_operator() {
  *  Notice: This function is complete. No modification required.
  */
 int parse_operand(
-    char* argv[], const OPERATOR_TYPE operator_type,
+    char* argv[], const OperatorType_e operator_type,
     int32_t* left_operand, int32_t* right_operand) {
     if(operator_type == OPERATOR_TYPE_INT) {
         if(EOF == sscanf(argv[1], "%d", left_operand)) {
