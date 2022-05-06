@@ -1,25 +1,25 @@
 #include <stdio.h>
 #include <stdint.h>
 #include <ctype.h>
-#include "operation.h"
+#include 
 
 #define RESULT_SUCCESS 0
 #define RESULT_FAILURE -1
 
-typedef enum {
+typedef {
     OPERATOR_TYPE_NONE,
     OPERATOR_TYPE_INT,
     OPERATOR_TYPE_BIT,
 } OPERATOR_TYPE;
 
-typedef struct {
-    const char input_param;
+typedef {
+    const ;
     int32_t (*func)(int32_t, int32_t);
     OPERATOR_TYPE type;
 } OPERATOR_ATTR; 
 
 
-int parse_operator(OPERATOR_ATTR* operation);
+int parse_operator();
 int parse_operand(
     char* argv[], const OPERATOR_TYPE operator_type,
     int32_t* left_operand, int32_t* right_operand);
@@ -27,6 +27,7 @@ int parse_operand(
 int main(int argc, char* argv[]) {
     /*
      *  Input param count check.
+     *  Notice: This Section is complete. No modification required.
      */
     for(int32_t i=1; i < argc; i++) {
         printf("Debug argv[%d]: %s\n", i, argv[i]);
@@ -40,17 +41,18 @@ int main(int argc, char* argv[]) {
      *  Operator check.
      */
     OPERATOR_ATTR operator = {
-        argv[2][0],
+        ,
         NULL,
         OPERATOR_TYPE_NONE
     };
-    if(parse_operator(&operator) != RESULT_SUCCESS) {
+    if(parse_operator() != RESULT_SUCCESS) {
         return -1;
     }
     printf("Debug operand type: %d\n", operator.type);
 
     /*
      *  Operand check.
+     *  Notice: This Section is complete. No modification required.
      */
     int32_t left_operand = 0;
     int32_t right_operand = 0;
@@ -63,6 +65,7 @@ int main(int argc, char* argv[]) {
 
     /*
      *  Execute operation and print result.
+     *  Notice: This Section is complete. No modification required.
      */
     const int32_t result = (*operator.func)(left_operand, right_operand);
     if(operator.type == OPERATOR_TYPE_INT) {
@@ -76,48 +79,14 @@ int main(int argc, char* argv[]) {
 }
 
 
-int parse_operator(OPERATOR_ATTR* operator) {
-    switch(operator->input_param) {
+int parse_operator() {
+    switch() {
     case '+':
-        operator->func = operate_add;
-        operator->type = OPERATOR_TYPE_INT;
-        break;
-    case '-':
-        operator->func = operate_sub;
-        operator->type = OPERATOR_TYPE_INT;
-        break;
-    case '*':
-        operator->func = operate_multi;
-        operator->type = OPERATOR_TYPE_INT;
-        break;
-    case '/':
-        operator->func = operate_div;
-        operator->type = OPERATOR_TYPE_INT;
-        break;
-    case '%':
-        operator->func = operate_mod;
-        operator->type = OPERATOR_TYPE_INT;
-        break;
-    case '<':
-        operator->func = operate_bit_lshift;
-        operator->type = OPERATOR_TYPE_BIT;
-        break;
-    case '>':
-        operator->func = operate_bit_rshift;
-        operator->type = OPERATOR_TYPE_BIT;
-        break;
+         = operate_add;
+         = OPERATOR_TYPE_INT;
     case '&':
-        operator->func = operate_bit_and;
-        operator->type = OPERATOR_TYPE_BIT;
-        break;
-    case '|':
-        operator->func = operate_bit_or;
-        operator->type = OPERATOR_TYPE_BIT;
-        break;
-    case '^':
-        operator->func = operate_bit_invert;
-        operator->type = OPERATOR_TYPE_BIT;
-        break;
+         = operate_bit_and;
+         = OPERATOR_TYPE_BIT;
     default:
         printf("Error: Operand invalid.\n");
         return RESULT_FAILURE;
@@ -127,6 +96,9 @@ int parse_operator(OPERATOR_ATTR* operator) {
 }
 
 
+/*
+ *  Notice: This function is complete. No modification required.
+ */
 int parse_operand(
     char* argv[], const OPERATOR_TYPE operator_type,
     int32_t* left_operand, int32_t* right_operand) {
