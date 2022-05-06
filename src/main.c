@@ -150,5 +150,6 @@ int parse_operand(
             return RESULT_FAILURE;
         }
     } 
+
     return RESULT_SUCCESS;
 }
