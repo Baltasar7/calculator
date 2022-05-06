@@ -24,6 +24,20 @@ int parse_operand(
     char* argv[], const OPERATOR_TYPE operator_type,
     int32_t* left_operand, int32_t* right_operand);
 
+/*
+ *  Usage: Enter ther following param when execute this program.
+ *      1st param: Left Operand (integer or hexadecimal)
+ *      2nd param: Operator (one character)
+ *      3rd param: Right Operand (integer or hexadecimal)
+ *
+ *  Operator type:
+ *      TYPE_INT: +, -, *, /, %
+ *      TYPE_BIT: < (left shift), > (right shift), &, |, ^
+ *
+ *  Rule:
+ *      If Operator type is TYPE_INT, Operand is an integer value.
+ *      If Operator type is TYPE_BIT, Operand is a hexadecimal value.
+ */
 int main(int argc, char* argv[]) {
     /*
      *  Input param count check.
