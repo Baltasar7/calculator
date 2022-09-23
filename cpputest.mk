@@ -9,7 +9,7 @@ SILENCE = @
 #--- Inputs ----#
 PROJECT_HOME_DIR = .
 ifeq "$(CPPUTEST_HOME)" ""
-    CPPUTEST_HOME = ../CppUTest
+    CPPUTEST_HOME = ../cpputest
 endif
 CPP_PLATFORM = Gcc
 
