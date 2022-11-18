@@ -10,7 +10,7 @@ TEST_GROUP(OperationInt) {
 };
 
 TEST(OperationInt, OperateAdd) {
-    int retval = operate_add(1, 2);
+    int retval = operate_add(2, 2);
     CHECK_EQUAL(retval, 3);
 }
 
