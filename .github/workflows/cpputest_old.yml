@@ -1,0 +1,38 @@
+name: CppUTest
+
+on:
+  push:
+    branches: [ "master" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      CPPUTEST_HOME: "/home/runner/work/calculator/calculator/cpputest"
+    steps:
+    - name: checkout repo code
+      uses: actions/checkout@v3
+
+    - name: pkg update
+      run: sudo apt update
+
+    - name: pkg install
+      run: sudo apt install -y gcc g++ make automake autoconf libtool git diffutils
+
+    - name: git clone cpputest
+      run: git clone https://github.com/cpputest/cpputest.git
+
+    - name: setup cpputest
+      run: |
+        autoreconf . -i
+        ./configure --disable-dependency-tracking
+        make tdd
+      working-directory: ./cpputest
+
+    - name: build product
+      run: make
+      working-directory: ${{ github.workspace }}
+
+    - name: run unit test
+      run: make -f cpputest.mk
+      working-directory: ${{ github.workspace }}

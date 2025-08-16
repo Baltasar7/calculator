@@ -8,25 +8,39 @@ jobs:
   build:
     runs-on: ubuntu-latest
     env:
-      CPPUTEST_HOME: "/home/runner/work/calculator/calculator/cpputest"
+      CPPUTEST_HOME: ${{ github.workspace }}/cpputest
     steps:
     - name: checkout repo code
       uses: actions/checkout@v3
-    - name: pkg update
-      run: sudo apt update
+
     - name: pkg install
-      run: sudo apt install -y gcc g++ make automake autoconf libtool git diffutils
+      run: sudo apt-get update && sudo apt-get install -y gcc g++ make automake autoconf libtool git diffutils
+
+    - name: Cache cpputest
+      id: cache-cpputest
+      uses: actions/cache@v3
+      with:
+        path: cpputest
+        key: cpputest-${{ runner.os }}-${{ hashFiles('**/cpputest-version.txt') }}
+
     - name: git clone cpputest
-      run: git clone https://github.com/cpputest/cpputest.git
+      if: steps.cache-cpputest.outputs.cache-hit != 'true'
+      run: |
+        git clone https://github.com/cpputest/cpputest.git
+        git -C cpputest rev-parse HEAD > cpputest-version.txt
+
     - name: setup cpputest
+      if: steps.cache-cpputest.outputs.cache-hit != 'true'
       run: |
         autoreconf . -i
         ./configure --disable-dependency-tracking
         make tdd
       working-directory: ./cpputest
+
     - name: build product
       run: make
       working-directory: ${{ github.workspace }}
+
     - name: run unit test
       run: make -f cpputest.mk
       working-directory: ${{ github.workspace }}
