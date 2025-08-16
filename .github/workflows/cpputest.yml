@@ -23,10 +23,6 @@ jobs:
         path: cpputest
         key: cpputest-${{ runner.os }}-${{ hashFiles('**/cpputest-version.txt') }}
 
-    - name: print cpputest version
-      run: |
-        echo "cpputest-version.txt: $(cat cpputest-version.txt)" 2> /dev/null
-
     - name: git clone cpputest
       if: steps.cache-cpputest.outputs.cache-hit != 'true'
       run: |
@@ -40,6 +36,10 @@ jobs:
         ./configure --disable-dependency-tracking
         make tdd
       working-directory: ./cpputest
+
+    - name: print cpputest version
+      run: |
+        echo "cpputest-version.txt: $(cat cpputest-version.txt)" 2> /dev/null
 
     - name: build product
       run: make
