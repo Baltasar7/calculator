@@ -16,18 +16,23 @@ jobs:
     - name: pkg install
       run: sudo apt-get update && sudo apt-get install -y gcc g++ make automake autoconf libtool git diffutils
 
+    - name: define and print cpputest version
+      id: cpptest-version
+      run: |
+        echo "version=$(git ls-remote https://github.com/cpputest/cpputest.git HEAD | cut -f1)" >> $GITHUB_OUTPUT
+        echo "cpputest-version.txt: $(cat cpputest-version.txt)" 2> /dev/null
+
     - name: Cache cpputest
       id: cache-cpputest
       uses: actions/cache@v3
       with:
         path: cpputest
-        key: cpputest-${{ runner.os }}-${{ hashFiles('**/cpputest-version.txt') }}
+        key: cpputest-${{ runner.os }}-${{ steps.cpptest-version.outputs.version }}
 
     - name: git clone cpputest
       if: steps.cache-cpputest.outputs.cache-hit != 'true'
       run: |
         git clone https://github.com/cpputest/cpputest.git
-        git -C cpputest rev-parse HEAD > cpputest-version.txt
 
     - name: setup cpputest
       if: steps.cache-cpputest.outputs.cache-hit != 'true'
@@ -36,10 +41,6 @@ jobs:
         ./configure --disable-dependency-tracking
         make tdd
       working-directory: ./cpputest
-
-    - name: print cpputest version
-      run: |
-        echo "cpputest-version.txt: $(cat cpputest-version.txt)" 2> /dev/null
 
     - name: build product
       run: make
