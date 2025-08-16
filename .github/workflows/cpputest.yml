@@ -25,7 +25,7 @@ jobs:
 
     - name: print cpputest version
       run: |
-        echo "cpputest-version.txt: $(cat ./cpputest/cpputest-version.txt)" 2> /dev/null
+        echo "cpputest-version.txt: $(cat cpputest-version.txt)" 2> /dev/null
 
     - name: git clone cpputest
       if: steps.cache-cpputest.outputs.cache-hit != 'true'
