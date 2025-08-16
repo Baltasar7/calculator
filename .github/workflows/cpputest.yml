@@ -20,7 +20,7 @@ jobs:
       id: cpptest-version
       run: |
         echo "version=$(git ls-remote https://github.com/cpputest/cpputest.git HEAD | cut -f1)" >> $GITHUB_OUTPUT
-        echo "cpputest-version.txt: $(cat cpputest-version.txt)" 2> /dev/null
+        echo "GITHUB_OUTPUT: $GITHUB_OUTPUT"
 
     - name: Cache cpputest
       id: cache-cpputest
