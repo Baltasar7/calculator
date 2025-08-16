@@ -11,8 +11,7 @@ TEST_GROUP(OperationInt) {
 
 TEST(OperationInt, OperateAdd) {
     int retval = operate_add(1, 2);
-    CHECK_EQUAL(retval, 4);
-    //CHECK_EQUAL(retval, 3);
+    CHECK_EQUAL(retval, 3);
 }
 
 TEST(OperationInt, OperateSubDefault) {
