@@ -79,3 +79,5 @@ TEST(OperationBit, OperateBitInvert) {
     int retval = operate_bit_invert(0x25, 0x0f);
     CHECK_EQUAL(retval, 0x2a);
 }
+
+// pull request test comments.
