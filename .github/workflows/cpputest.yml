@@ -28,6 +28,7 @@ jobs:
       run: |
         git clone https://github.com/cpputest/cpputest.git
         git -C cpputest rev-parse HEAD > cpputest-version.txt
+        echo "cpputest-version.txt: $(cat cpputest-version.txt)"
 
     - name: setup cpputest
       if: steps.cache-cpputest.outputs.cache-hit != 'true'
